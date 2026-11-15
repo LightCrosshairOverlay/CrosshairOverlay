@@ -6,7 +6,7 @@ A small, free and lightweight transparent crosshair overlay for windowed games.
 ![.NET](https://img.shields.io/badge/.NET-10-blue.svg)
 ![Size](https://img.shields.io/badge/size-~270%20KB-lightgrey.svg)
 
-**[Download CrosshairOverlay.exe](../../releases/latest)** · **[Website](https://lightcrosshairoverlay.github.io/LightCrosshairOverlay/)**
+**[Download CrosshairOverlay.exe](../../releases/latest)** · **[Website](https://lightcrosshairoverlay.github.io/CrosshairOverlay/)**
 
 ---
 
@@ -22,11 +22,9 @@ Double-click it and it runs.
 
 1. **Download** `CrosshairOverlay.exe` and run it.
 2. A crosshair appears at the **center of your screen**.
-3. Right-click the tray icon (or double-click it) to open **Settings**.
-4. Pick a **shape** (14 shapes: dot, plus, cross, circle, square, diamond, triangle,
-   T, and more), a **size**, a **thickness**, a **color**, and a **position**.
-5. Press **Ctrl+H** to show or hide the crosshair, **Ctrl+J** to move it with the mouse.
-6. Your settings are saved automatically and restored at the next launch.
+3. Right-click the tray icon (or double-click it) to open **Settings** and customize it.
+4. Press **Ctrl+H** to show or hide the crosshair, **Ctrl+J** to move it with the mouse.
+5. Your settings are saved automatically and restored at the next launch.
 
 That is all. There is nothing else to configure.
 
