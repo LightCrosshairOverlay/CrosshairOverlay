@@ -1,3 +1,5 @@
+<p align="center"><img src="icons/double-anneau.png" alt="Crosshair Overlay icon" width="128"></p>
+
 # Light Crosshair Overlay
 
 A small, free and lightweight transparent crosshair overlay for windowed games.
@@ -89,6 +91,13 @@ dotnet publish -c Release -o ../publish
 ```
 
 The output is a single framework-dependent exe (`CrosshairOverlay.exe`).
+
+## Support
+
+If this tool helps you, you can support its development:
+
+- **Liberapay:** https://liberapay.com/Deaa/
+- **USDT (TRC20):** `TNCFvYtPy2Q6P2nxfoQgqa1ANLMZhVqLK7`
 
 ## License
 
