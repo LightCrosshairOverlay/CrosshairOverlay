@@ -8,6 +8,8 @@ A small, free and lightweight transparent crosshair overlay for windowed games.
 
 **[Download CrosshairOverlay.exe](../../releases/latest)** · **[Website](https://lightcrosshairoverlay.github.io/CrosshairOverlay/)**
 
+![Crosshair Overlay settings](docs/screenshot-settings.webp)
+
 ---
 
 ## What it is
