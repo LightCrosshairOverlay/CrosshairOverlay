@@ -2,9 +2,13 @@
 
 A small, free and lightweight transparent crosshair overlay for windowed games.
 
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
-![.NET](https://img.shields.io/badge/.NET-10-blue.svg)
-![Size](https://img.shields.io/badge/size-~270%20KB-lightgrey.svg)
+[![Latest release](https://img.shields.io/github/v/release/LightCrosshairOverlay/CrosshairOverlay)](https://github.com/LightCrosshairOverlay/CrosshairOverlay/releases/latest)
+[![License: MIT](https://img.shields.io/github/license/LightCrosshairOverlay/CrosshairOverlay)](https://github.com/LightCrosshairOverlay/CrosshairOverlay/blob/main/LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/LightCrosshairOverlay/CrosshairOverlay/total)](https://github.com/LightCrosshairOverlay/CrosshairOverlay/releases)
+[![Stars](https://img.shields.io/github/stars/LightCrosshairOverlay/CrosshairOverlay)](https://github.com/LightCrosshairOverlay/CrosshairOverlay/stargazers)
+![Platform: Windows](https://img.shields.io/badge/platform-Windows-0078D4)
+![.NET 10](https://img.shields.io/badge/.NET-10-512BD4)
+![Size](https://img.shields.io/badge/size-~270%20KB-lightgrey)
 
 **[Download CrosshairOverlay.exe](../../releases/latest)** · **[Website](https://lightcrosshairoverlay.github.io/CrosshairOverlay/)**
 
