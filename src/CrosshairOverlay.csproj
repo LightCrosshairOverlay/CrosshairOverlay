@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <!-- Building a Windows app from this Linux VM requires this flag. -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>CrosshairOverlay</AssemblyName>
+    <RootNamespace>CrosshairOverlay</RootNamespace>
+    <Version>1.8.2</Version>
+    <ApplicationIcon>CrosshairOverlay.ico</ApplicationIcon>
+    <AssemblyTitle>Crosshair Overlay</AssemblyTitle>
+    <AssemblyProduct>Crosshair Overlay</AssemblyProduct>
+    <AssemblyCompany>Deaa</AssemblyCompany>
+    <AssemblyCopyright>Copyright (c) 2026 Deaa</AssemblyCopyright>
+    <Description>Small transparent crosshair overlay for windowed games. No network, no injection, no game memory access.</Description>
+    <!-- Single small exe. Requires the .NET 10 Desktop Runtime (already installed for Dex Tab Swift). -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+</Project>

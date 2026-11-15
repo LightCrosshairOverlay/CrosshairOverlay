@@ -1,0 +1,14 @@
+## .NET
+bin/
+obj/
+out/
+publish/
+*.user
+*.suo
+.vs/
+*.pdb
+
+## OS
+Thumbs.db
+.DS_Store
+Desktop.ini

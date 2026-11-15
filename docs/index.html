@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crosshair Overlay — Viseur gratuit, léger et open source</title>
+<meta name="description" content="Crosshair Overlay : un petit viseur transparent gratuit et ultra léger pour les jeux en fenêtré. Un seul exe de ~270 Ko. Aucune injection, aucun accès mémoire, aucun réseau. Open source (MIT).">
+<style>
+  :root{--bg:#141414;--panel:#1e1e1e;--panel2:#262626;--text:#f2f2f2;--muted:#b8b8b8;--accent:#2E7CE6;--green:#00c853;--orange:#ff8c1a;--border:#333;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;line-height:1.6}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  header{position:sticky;top:0;background:rgba(20,20,20,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);z-index:10}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;color:var(--text)}
+  .brand:hover{text-decoration:none}
+  .brand svg{flex:none}
+  .lang{display:flex;gap:6px}
+  .lang button{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:14px}
+  .lang button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .hero{padding:72px 0 56px;text-align:center}
+  .hero h1{font-size:44px;line-height:1.15;margin:18px 0 10px}
+  .hero p.lead{font-size:19px;color:var(--muted);max-width:640px;margin:0 auto 26px}
+  .badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:30px}
+  .badge{background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:7px 16px;font-size:14px}
+  .badge b{color:var(--green)}
+  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:700;font-size:18px;padding:14px 34px;border-radius:10px}
+  .btn:hover{text-decoration:none;opacity:.92}
+  .btn.ghost{background:var(--panel);border:1px solid var(--border);color:var(--text);font-size:16px;padding:13px 26px}
+  .hero .links{margin-top:16px;font-size:14px;color:var(--muted)}
+  section{padding:44px 0}
+  h2{font-size:28px;margin-bottom:8px}
+  .sub{color:var(--muted);margin-bottom:26px;max-width:640px}
+  .steps{display:grid;gap:14px}
+  .step{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;gap:16px;align-items:flex-start}
+  .step .n{flex:none;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .step h3{font-size:17px;margin-bottom:2px}
+  .step p{color:var(--muted);font-size:15px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .card .ico{font-size:26px;margin-bottom:8px}
+  .card h3{font-size:17px;margin-bottom:4px}
+  .card p{color:var(--muted);font-size:15px}
+  .safe{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px}
+  .safe ul{list-style:none;margin-top:10px}
+  .safe li{padding:6px 0;color:var(--muted);font-size:15px}
+  .safe li b{color:var(--text)}
+  .safe li::before{content:"✕ ";color:#ff5252;font-weight:700}
+  .safe li.ok::before{content:"✓ ";color:var(--green)}
+  .dl{text-align:center;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:36px 20px}
+  .dl p{color:var(--muted);margin:10px auto 22px;max-width:560px}
+  .dl .req{font-size:13px;color:var(--muted);margin-top:14px}
+  footer{border-top:1px solid var(--border);padding:28px 0 40px;color:var(--muted);font-size:14px;text-align:center}
+  footer a{color:var(--muted)}
+  @media(max-width:600px){.hero h1{font-size:32px}.hero p.lead{font-size:17px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="#">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#202020"/><g fill="none" stroke="#fff" stroke-width="2.5"><circle cx="16" cy="16" r="12"/><circle cx="16" cy="16" r="7"/></g><circle cx="16" cy="16" r="2" fill="#fff"/></svg>
+      Crosshair Overlay
+    </a>
+    <div class="lang">
+      <button id="btn-fr" class="on" onclick="setLang('fr')">Français</button>
+      <button id="btn-en" onclick="setLang('en')">English</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <svg width="96" height="96" viewBox="0 0 96 96" aria-hidden="true"><rect width="96" height="96" rx="20" fill="#202020"/><g fill="none" stroke="#fff" stroke-width="7"><circle cx="48" cy="48" r="33"/><circle cx="48" cy="48" r="20"/></g><circle cx="48" cy="48" r="5.5" fill="#fff"/></svg>
+    <h1 data-fr="Crosshair Overlay" data-en="Crosshair Overlay">Crosshair Overlay</h1>
+    <p class="lead" data-fr="Un petit viseur transparent pour tes jeux. Gratuit, ultra léger, open source. Un seul exe, rien d'autre." data-en="A small transparent crosshair for your games. Free, ultra light, open source. One single exe, nothing else.">Un petit viseur transparent pour tes jeux. Gratuit, ultra léger, open source. Un seul exe, rien d'autre.</p>
+    <div class="badges">
+      <span class="badge"><b>100% gratuit</b></span>
+      <span class="badge" data-fr="Ultra léger — ~270 Ko" data-en="Ultra light — ~270 KB">Ultra léger — ~270 Ko</span>
+      <span class="badge">Open source (MIT)</span>
+      <span class="badge" data-fr="Aucune injection" data-en="No injection">Aucune injection</span>
+    </div>
+    <a class="btn" href="https://github.com/DexTabSwift/CrosshairOverlay/releases/latest" data-fr="Télécharger gratuitement" data-en="Download for free">Télécharger gratuitement</a>
+    <div class="links"><a href="https://github.com/DexTabSwift/CrosshairOverlay" data-fr="Code source sur GitHub" data-en="Source code on GitHub">Code source sur GitHub</a></div>
+  </div>
+
+  <section>
+    <h2 data-fr="Comment ça marche" data-en="How it works">Comment ça marche</h2>
+    <p class="sub" data-fr="Cinq étapes, et c'est tout. Aucun compte, aucune installation, aucun réglage compliqué." data-en="Five steps, and that's it. No account, no install, no complicated settings.">Cinq étapes, et c'est tout. Aucun compte, aucune installation, aucun réglage compliqué.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div><h3 data-fr="Télécharge l'exe" data-en="Download the exe">Télécharge l'exe</h3><p data-fr="Un seul fichier, CrosshairOverlay.exe, environ 270 Ko. Pas d'installeur." data-en="A single file, CrosshairOverlay.exe, about 270 KB. No installer.">Un seul fichier, CrosshairOverlay.exe, environ 270 Ko. Pas d'installeur.</p></div></div>
+      <div class="step"><div class="n">2</div><div><h3 data-fr="Lance-le" data-en="Run it">Lance-le</h3><p data-fr="Double-clic, et un viseur apparaît au centre de ton écran." data-en="Double-click, and a crosshair appears at the center of your screen.">Double-clic, et un viseur apparaît au centre de ton écran.</p></div></div>
+      <div class="step"><div class="n">3</div><div><h3 data-fr="Choisis ta forme" data-en="Pick your shape">Choisis ta forme</h3><p data-fr="Ouvre les réglages (clic droit sur l'icône de la barre des tâches) : 14 formes, taille, épaisseur, couleur, position." data-en="Open Settings (right-click the tray icon): 14 shapes, size, thickness, color, position.">Ouvre les réglages (clic droit sur l'icône de la barre des tâches) : 14 formes, taille, épaisseur, couleur, position.</p></div></div>
+      <div class="step"><div class="n">4</div><div><h3 data-fr="Joue" data-en="Play">Joue</h3><p data-fr="Le viseur reste au-dessus de ton jeu en mode fenêtré ou sans bordure. Ctrl+H pour l'afficher ou le masquer, Ctrl+J pour le déplacer à la souris." data-en="The crosshair stays on top of your windowed or borderless game. Ctrl+H to show or hide it, Ctrl+J to move it with the mouse.">Le viseur reste au-dessus de ton jeu en mode fenêtré ou sans bordure. Ctrl+H pour l'afficher ou le masquer, Ctrl+J pour le déplacer à la souris.</p></div></div>
+      <div class="step"><div class="n">5</div><div><h3 data-fr="C'est gardé" data-en="It's saved">C'est gardé</h3><p data-fr="Tes réglages sont enregistrés automatiquement et retrouvés au prochain lancement." data-en="Your settings are saved automatically and restored at the next launch.">Tes réglages sont enregistrés automatiquement et retrouvés au prochain lancement.</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-fr="Pourquoi Crosshair Overlay ?" data-en="Why Crosshair Overlay?">Pourquoi Crosshair Overlay ?</h2>
+    <p class="sub" data-fr="Les avantages, sans détour." data-en="The advantages, plainly stated.">Les avantages, sans détour.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">💸</div><h3 data-fr="Totalement gratuit" data-en="Totally free">Totalement gratuit</h3><p data-fr="Aucun paiement, aucune pub, aucun compte, aucune version d'essai. Le code est ouvert (licence MIT) : tu peux le lire, le modifier et le partager." data-en="No payment, no ads, no account, no trial. The code is open (MIT license): you can read it, modify it and share it.">Aucun paiement, aucune pub, aucun compte, aucune version d'essai. Le code est ouvert (licence MIT) : tu peux le lire, le modifier et le partager.</p></div>
+      <div class="card"><div class="ico">🪶</div><h3 data-fr="Ultra léger" data-en="Ultra light">Ultra léger</h3><p data-fr="Un seul exe d'environ 270 Ko. Pas d'installeur, pas de service en arrière-plan. CPU et RAM proches de 0 % au repos : il ne redessine que quand quelque chose change." data-en="A single exe of about 270 KB. No installer, no background service. CPU and RAM near 0% at rest: it only redraws when something changes.">Un seul exe d'environ 270 Ko. Pas d'installeur, pas de service en arrière-plan. CPU et RAM proches de 0 % au repos : il ne redessine que quand quelque chose change.</p></div>
+      <div class="card"><div class="ico">🛡️</div><h3 data-fr="Sûr et compatible anti-cheat" data-en="Safe and anti-cheat friendly">Sûr et compatible anti-cheat</h3><p data-fr="Aucune injection, aucun hook, aucune lecture de la mémoire du jeu, aucun pilote, aucun droit admin. C'est juste une fenêtre transparente au-dessus de l'écran, comme les overlays de Discord ou Steam." data-en="No injection, no hooks, no game memory access, no driver, no admin rights. It is just a transparent window on top of the screen, like the overlays of Discord or Steam.">Aucune injection, aucun hook, aucune lecture de la mémoire du jeu, aucun pilote, aucun droit admin. C'est juste une fenêtre transparente au-dessus de l'écran, comme les overlays de Discord ou Steam.</p></div>
+      <div class="card"><div class="ico">🎯</div><h3 data-fr="14 formes" data-en="14 shapes">14 formes</h3><p data-fr="Point, croix +, croix X, cercle, cercle + point, cercle + croix, carré, losange, triangle, T, croix + point, croix + trou, ligne horizontale, ligne verticale." data-en="Dot, plus, cross, circle, circle + dot, circle + cross, square, diamond, triangle, T, plus + dot, plus + hole, horizontal line, vertical line.">Point, croix +, croix X, cercle, cercle + point, cercle + croix, carré, losange, triangle, T, croix + point, croix + trou, ligne horizontale, ligne verticale.</p></div>
+      <div class="card"><div class="ico">🌍</div><h3 data-fr="4 langues" data-en="4 languages">4 langues</h3><p data-fr="Toute l'interface est traduite en français, anglais, russe et espagnol. Le choix est gardé dans tes réglages." data-en="The whole interface is translated into French, English, Russian and Spanish. Your choice is saved in your settings.">Toute l'interface est traduite en français, anglais, russe et espagnol. Le choix est gardé dans tes réglages.</p></div>
+      <div class="card"><div class="ico">🖱️</div><h3 data-fr="Déplaçable" data-en="Movable">Déplaçable</h3><p data-fr="Glisse-le à la souris (Ctrl+J), tape des coordonnées X/Y exactes, ou centre-le en un clic. Le contour sombre optionnel le garde visible sur n'importe quel fond." data-en="Drag it with the mouse (Ctrl+J), type exact X/Y coordinates, or center it in one click. The optional dark outline keeps it visible on any background.">Glisse-le à la souris (Ctrl+J), tape des coordonnées X/Y exactes, ou centre-le en un clic. Le contour sombre optionnel le garde visible sur n'importe quel fond.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-fr="Ce qu'il ne fait pas" data-en="What it does not do">Ce qu'il ne fait pas</h2>
+    <p class="sub" data-fr="La sécurité se vérifie. Le code est ouvert, et voici ce qu'il ne contient pas." data-en="Safety can be checked. The code is open, and here is what it does not contain.">La sécurité se vérifie. Le code est ouvert, et voici ce qu'il ne contient pas.</p>
+    <div class="safe">
+      <ul>
+        <li><b data-fr="Aucun réseau" data-en="No network">Aucun réseau</b> — <span data-fr="aucune connexion, aucune donnée envoyée." data-en="no connection, no data sent.">aucune connexion, aucune donnée envoyée.</span></li>
+        <li><b data-fr="Aucun hook" data-en="No hooks">Aucun hook</b> — <span data-fr="il ne surveille ni le clavier ni la souris." data-en="it does not monitor the keyboard or the mouse.">il ne surveille ni le clavier ni la souris.</span></li>
+        <li><b data-fr="Aucune lecture mémoire" data-en="No memory access">Aucune lecture mémoire</b> — <span data-fr="il ne lit ni ne modifie aucun jeu." data-en="it does not read or modify any game.">il ne lit ni ne modifie aucun jeu.</span></li>
+        <li><b data-fr="Aucune injection" data-en="No injection">Aucune injection</b> — <span data-fr="aucun code injecté, aucune fausse touche envoyée." data-en="no injected code, no fake input sent.">aucun code injecté, aucune fausse touche envoyée.</span></li>
+        <li><b data-fr="Aucun pilote, aucun admin" data-en="No driver, no admin">Aucun pilote, aucun admin</b> — <span data-fr="il tourne comme un programme normal." data-en="it runs like a normal program.">il tourne comme un programme normal.</span></li>
+        <li class="ok"><b data-fr="Juste deux fonctions Windows" data-en="Just two Windows features">Juste deux fonctions Windows</b> — <span data-fr="une fenêtre transparente (UpdateLayeredWindow) et deux raccourcis (Ctrl+H, Ctrl+J)." data-en="a transparent window (UpdateLayeredWindow) and two shortcuts (Ctrl+H, Ctrl+J).">une fenêtre transparente (UpdateLayeredWindow) et deux raccourcis (Ctrl+H, Ctrl+J).</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="dl">
+      <h2 data-fr="Télécharger" data-en="Download">Télécharger</h2>
+      <p data-fr="Un seul exe, gratuit, pour Windows 10 et 11 (64 bits). Si Windows affiche SmartScreen (logiciel non signé), clique « Informations complémentaires » puis « Exécuter quand même »." data-en="A single free exe, for Windows 10 and 11 (64-bit). If Windows shows SmartScreen (unsigned software), click “More info” then “Run anyway”.">Un seul exe, gratuit, pour Windows 10 et 11 (64 bits). Si Windows affiche SmartScreen (logiciel non signé), clique « Informations complémentaires » puis « Exécuter quand même ».</p>
+      <a class="btn" href="https://github.com/DexTabSwift/CrosshairOverlay/releases/latest" data-fr="Télécharger CrosshairOverlay.exe" data-en="Download CrosshairOverlay.exe">Télécharger CrosshairOverlay.exe</a>
+      <p class="req"><span data-fr="Nécessite le" data-en="Requires the">Nécessite le</span> <a href="https://dotnet.microsoft.com/download/dotnet/10.0">.NET 10 Desktop Runtime</a> <span data-fr="(gratuit, Microsoft). Version actuelle : 1.8.2." data-en="(free, from Microsoft). Current version: 1.8.2.">(gratuit, Microsoft). Version actuelle : 1.8.2.</span></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Crosshair Overlay — <span data-fr="licence MIT, gratuit et open source." data-en="MIT license, free and open source.">licence MIT, gratuit et open source.</span><br>
+    <a href="https://github.com/DexTabSwift/CrosshairOverlay">GitHub</a> · <a href="https://github.com/DexTabSwift/CrosshairOverlay/releases/latest">Releases</a><br>
+    <span data-fr="Inspiré par" data-en="Inspired by">Inspiré par</span> <a href="https://github.com/zkxs/simple-crosshair-overlay">zkxs/simple-crosshair-overlay</a> <span data-fr="(réécriture C# indépendante)." data-en="(independent C# rewrite).">(réécriture C# indépendante).</span></p>
+  </div>
+</footer>
+
+<script>
+function setLang(l){
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-fr]').forEach(function(el){
+    var t=el.getAttribute(l==='fr'?'data-fr':'data-en');
+    if(t!==null) el.textContent=t;
+  });
+  document.getElementById('btn-fr').classList.toggle('on',l==='fr');
+  document.getElementById('btn-en').classList.toggle('on',l==='en');
+  try{localStorage.setItem('co-lang',l);}catch(e){}
+}
+try{var s=localStorage.getItem('co-lang');if(s==='en')setLang('en');}catch(e){}
+</script>
+</body>
+</html>
