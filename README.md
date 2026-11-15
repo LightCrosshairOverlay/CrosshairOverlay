@@ -23,8 +23,7 @@ Double-click it and it runs.
 1. **Download** `CrosshairOverlay.exe` and run it.
 2. A crosshair appears at the **center of your screen**.
 3. Right-click the tray icon (or double-click it) to open **Settings** and customize it.
-4. Press **Ctrl+H** to show or hide the crosshair, **Ctrl+J** to move it with the mouse.
-5. Your settings are saved automatically and restored at the next launch.
+4. Your settings are saved automatically and restored at the next launch.
 
 That is all. There is nothing else to configure.
 
@@ -43,7 +42,7 @@ That is all. There is nothing else to configure.
 - **14 shapes** — dot, plus, cross, circle, circle + dot, circle + cross, square,
   diamond, triangle, T, plus + dot, plus + hole, horizontal line, vertical line.
 - **4 languages** — French, English, Russian, Spanish (full interface, saved in settings).
-- **Movable** — drag it with the mouse (Ctrl+J or the "Move with mouse" checkbox),
+- **Movable** — drag it with the mouse (with the "Move with mouse" checkbox),
   or type exact X/Y coordinates, or center it with one click.
 - **Dark outline** — an optional dark outline keeps the crosshair visible on any
   background, bright or dark.
@@ -65,21 +64,10 @@ The source code is open, so anyone can verify this. The program:
 - does **not** inject code or send fake input (no `SendInput`, no `mouse_event`);
 - does **not** install a driver and does **not** need administrator rights.
 
-It only uses two Windows features, like any legitimate overlay:
-
-- `UpdateLayeredWindow` — to draw a transparent window on top of the screen;
-- `RegisterHotKey` — for the two global shortcuts (Ctrl+H, Ctrl+J).
+It draws a transparent window on top of the screen (`UpdateLayeredWindow`), like any legitimate overlay.
 
 The only file it writes is its own settings file:
 `%LOCALAPPDATA%\CrosshairOverlay\settings.json`.
-
-## Shortcuts
-
-| Shortcut | Action |
-|---|---|
-| Ctrl+H | Show / hide the crosshair |
-| Ctrl+J | Move mode (drag the crosshair with the mouse) |
-| Arrow keys | Move 1 px (Shift = 10 px) while the settings window is open |
 
 ## Build from source
 
@@ -95,21 +83,6 @@ dotnet publish -c Release -o ../publish
 ```
 
 The output is a single framework-dependent exe (`CrosshairOverlay.exe`).
-
-## Credits
-
-- Inspired by [zkxs/simple-crosshair-overlay](https://github.com/zkxs/simple-crosshair-overlay)
-  (Rust, GPL-3.0). This is an independent C# rewrite, not a port.
-- Icon: "Double anneau" (two rings and a dot), drawn programmatically.
-
-## Support
-
-Light Crosshair Overlay is free and will stay free. If you want to support its development:
-
-- **Liberapay**: https://liberapay.com/Deaa/
-- **USDT (TRC20)**: `TNCFvYtPy2Q6P2nxfoQgqa1ANLMZhVqLK7`
-
-Every donation helps keep the project free and lightweight. Thank you!
 
 ## License
 
