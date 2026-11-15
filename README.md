@@ -104,6 +104,15 @@ The output is a single framework-dependent exe (`CrosshairOverlay.exe`).
   (Rust, GPL-3.0). This is an independent C# rewrite, not a port.
 - Icon: "Double anneau" (two rings and a dot), drawn programmatically.
 
+## Support
+
+Light Crosshair Overlay is free and will stay free. If you want to support its development:
+
+- **Liberapay**: https://liberapay.com/Deaa/
+- **USDT (TRC20)**: `TNCFvYtPy2Q6P2nxfoQgqa1ANLMZhVqLK7`
+
+Every donation helps keep the project free and lightweight. Thank you!
+
 ## License
 
 MIT — see [LICENSE](LICENSE). Free to use, copy, modify and share, including for
