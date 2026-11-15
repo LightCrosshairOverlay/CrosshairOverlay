@@ -6,7 +6,7 @@ A small, free and lightweight transparent crosshair overlay for windowed games.
 ![.NET](https://img.shields.io/badge/.NET-10-blue.svg)
 ![Size](https://img.shields.io/badge/size-~270%20KB-lightgrey.svg)
 
-**[Download CrosshairOverlay.exe](../../releases/latest)** · **[Website](https://dextabswift.github.io/LightCrosshairOverlay/)**
+**[Download CrosshairOverlay.exe](../../releases/latest)** · **[Website](https://lightcrosshairoverlay.github.io/LightCrosshairOverlay/)**
 
 ---
 
