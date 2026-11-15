@@ -99,6 +99,10 @@ If this tool helps you, you can support its development:
 - **🧡 Liberapay:** https://liberapay.com/Deaa/
 - **💵 USDT (TRC20):** `TNCFvYtPy2Q6P2nxfoQgqa1ANLMZhVqLK7`
 
+<img src="docs/usdt-qr.png" alt="USDT TRC20 QR code" width="180">
+
+⚠️ Send only USDT via the TRON (TRC20) network to this address.
+
 ## 📄 License
 
 MIT — see [LICENSE](LICENSE). Free to use, copy, modify and share, including for
