@@ -6,57 +6,123 @@
 <title>Crosshair Overlay — Viseur gratuit, léger et open source</title>
 <meta name="description" content="Crosshair Overlay : un petit viseur transparent gratuit et ultra léger pour les jeux en fenêtré. Un seul exe de ~270 Ko. Aucune injection, aucun accès mémoire, aucun réseau. Open source (MIT).">
 <style>
-  :root{--bg:#141414;--panel:#1e1e1e;--panel2:#262626;--text:#f2f2f2;--muted:#b8b8b8;--accent:#2E7CE6;--green:#00c853;--orange:#ff8c1a;--border:#333;}
+  :root{
+    --bg:#0e0e11; --panel:#16161b; --panel2:#1d1d23;
+    --text:#f5f5f7; --muted:#a2a2ad;
+    --accent:#2E7CE6; --accent2:#7C3AED;
+    --green:#22c55e; --red:#f87171;
+    --border:rgba(255,255,255,.08); --border-soft:rgba(255,255,255,.05);
+    --grad:linear-gradient(135deg,#2E7CE6,#7C3AED);
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;line-height:1.6}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(900px 480px at 50% -80px, rgba(46,124,230,.16), transparent 65%),
+      radial-gradient(700px 380px at 85% 0px, rgba(124,58,237,.10), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:rgba(46,124,230,.4)}
   a{color:var(--accent);text-decoration:none}
   a:hover{text-decoration:underline}
-  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
-  header{position:sticky;top:0;background:rgba(20,20,20,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);z-index:10}
-  header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;color:var(--text)}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+
+  /* ---------- Header ---------- */
+  header{position:sticky;top:0;background:rgba(14,14,17,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border-soft);z-index:10}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--text)}
   .brand:hover{text-decoration:none}
-  .brand svg{flex:none}
+  .brand svg{flex:none;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+  .ver{font-size:11px;font-weight:700;color:var(--muted);background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:999px;padding:3px 9px;letter-spacing:.02em}
   .lang{display:flex;gap:6px}
-  .lang button{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:14px}
-  .lang button.on{background:var(--accent);border-color:var(--accent);color:#fff}
-  .hero{padding:72px 0 56px;text-align:center}
-  .hero h1{font-size:44px;line-height:1.15;margin:18px 0 10px}
-  .hero p.lead{font-size:19px;color:var(--muted);max-width:640px;margin:0 auto 26px}
-  .badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:30px}
-  .badge{background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:7px 16px;font-size:14px}
+  .lang button{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:999px;padding:7px 15px;cursor:pointer;font-size:14px;font-weight:600;transition:.15s}
+  .lang button:hover{border-color:rgba(255,255,255,.2)}
+  .lang button.on{background:var(--grad);border-color:transparent;color:#fff}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:88px 0 64px;text-align:center}
+  .hero .glow{position:relative;display:inline-block}
+  .hero .glow::before{content:"";position:absolute;inset:-38px;border-radius:50%;background:radial-gradient(circle,rgba(46,124,230,.28),rgba(124,58,237,.12) 55%,transparent 72%);z-index:0}
+  .hero .glow svg{position:relative;z-index:1;filter:drop-shadow(0 12px 28px rgba(0,0,0,.55))}
+  .hero h1{font-size:52px;line-height:1.08;margin:26px 0 12px;letter-spacing:-.025em;font-weight:800}
+  .hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .hero p.lead{font-size:20px;color:var(--muted);max-width:660px;margin:0 auto 28px;line-height:1.6}
+  .badges{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-bottom:34px}
+  .badge{background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:999px;padding:7px 15px;font-size:14px;font-weight:600;color:#d7d7de}
   .badge b{color:var(--green)}
-  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:700;font-size:18px;padding:14px 34px;border-radius:10px}
-  .btn:hover{text-decoration:none;opacity:.92}
-  .btn.ghost{background:var(--panel);border:1px solid var(--border);color:var(--text);font-size:16px;padding:13px 26px}
-  .hero .links{margin-top:16px;font-size:14px;color:var(--muted)}
-  section{padding:44px 0}
-  h2{font-size:28px;margin-bottom:8px}
-  .sub{color:var(--muted);margin-bottom:26px;max-width:640px}
-  .steps{display:grid;gap:14px}
-  .step{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;gap:16px;align-items:flex-start}
-  .step .n{flex:none;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:18px}
-  .step h3{font-size:17px;margin-bottom:2px}
-  .step p{color:var(--muted);font-size:15px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
-  .card .ico{font-size:26px;margin-bottom:8px}
-  .card h3{font-size:17px;margin-bottom:4px}
+  .btn{display:inline-block;background:var(--grad);color:#fff;font-weight:700;font-size:18px;padding:15px 36px;border-radius:12px;box-shadow:0 10px 28px rgba(46,124,230,.35);transition:.18s;border:0;cursor:pointer}
+  .btn:hover{text-decoration:none;transform:translateY(-1px);box-shadow:0 14px 34px rgba(46,124,230,.45)}
+  .btn:active{transform:translateY(0)}
+  .hero .links{margin-top:18px;font-size:14px;color:var(--muted)}
+
+  /* ---------- Sections ---------- */
+  section{padding:56px 0}
+  h2{font-size:30px;margin-bottom:6px;letter-spacing:-.02em;font-weight:800}
+  h2::after{content:"";display:block;width:44px;height:4px;border-radius:2px;background:var(--grad);margin-top:12px}
+  .sub{color:var(--muted);margin-bottom:30px;max-width:660px;font-size:16px}
+
+  /* ---------- Steps (timeline) ---------- */
+  .steps{display:grid;gap:30px;position:relative}
+  .steps::before{content:"";position:absolute;left:17px;top:26px;bottom:26px;width:2px;background:linear-gradient(180deg,rgba(46,124,230,.55),rgba(124,58,237,.55))}
+  .step{display:flex;gap:20px;align-items:flex-start;position:relative}
+  .step .n{flex:none;width:36px;height:36px;border-radius:50%;background:var(--grad);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:17px;position:relative;z-index:1;box-shadow:0 0 0 5px var(--bg)}
+  .step h3{font-size:18px;margin-bottom:3px;letter-spacing:-.01em}
+  .step p{color:var(--muted);font-size:15px;max-width:640px}
+
+  /* ---------- Interface screenshot ---------- */
+  .shot{text-align:center}
+  .shot img{max-width:411px;width:100%;border-radius:16px;border:1px solid var(--border);box-shadow:0 24px 56px rgba(0,0,0,.55)}
+  .shot figcaption{color:var(--muted);font-size:13px;margin-top:14px}
+
+  /* ---------- Advantage cards ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));border:1px solid var(--border);border-radius:16px;padding:24px;transition:.18s}
+  .card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.16);box-shadow:0 16px 36px rgba(0,0,0,.4)}
+  .card .ico{width:48px;height:48px;border-radius:13px;background:rgba(46,124,230,.13);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px}
+  .card h3{font-size:17px;margin-bottom:5px;letter-spacing:-.01em}
   .card p{color:var(--muted);font-size:15px}
-  .safe{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px}
-  .safe ul{list-style:none;margin-top:10px}
-  .safe li{padding:6px 0;color:var(--muted);font-size:15px}
+
+  /* ---------- Safety ---------- */
+  .safe{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--border);border-radius:16px;padding:26px 28px}
+  .safe ul{list-style:none;margin-top:14px;display:grid;gap:4px}
+  .safe li{display:flex;gap:12px;align-items:flex-start;padding:9px 0;color:var(--muted);font-size:15px}
   .safe li b{color:var(--text)}
-  .safe li::before{content:"✕ ";color:#ff5252;font-weight:700}
-  .safe li.ok::before{content:"✓ ";color:var(--green)}
-  .dl{text-align:center;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:36px 20px}
-  .dl p{color:var(--muted);margin:10px auto 22px;max-width:560px}
-  .dl .req{font-size:13px;color:var(--muted);margin-top:14px}
-  .copybtn{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:14px}
-  code{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:13px;word-break:break-all}
-  footer{border-top:1px solid var(--border);padding:28px 0 40px;color:var(--muted);font-size:14px;text-align:center}
+  .safe .mark{flex:none;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-top:1px}
+  .safe .mark.no{background:rgba(248,113,113,.13);color:var(--red)}
+  .safe .mark.yes{background:rgba(34,197,94,.14);color:var(--green)}
+
+  /* ---------- Download / Support panels ---------- */
+  .panel{position:relative;border-radius:20px;padding:2px;background:linear-gradient(135deg,rgba(46,124,230,.7),rgba(124,58,237,.7),rgba(46,124,230,.25))}
+  .panel .inner{background:#131318;border-radius:18px;padding:42px 24px;text-align:center}
+  .panel h2::after{margin-left:auto;margin-right:auto}
+  .panel p{color:var(--muted);margin:12px auto 24px;max-width:580px}
+  .panel .req{font-size:13px;color:var(--muted);margin-top:16px;margin-bottom:0}
+  .panel.neutral{background:var(--border)}
+  .panel.neutral .inner{background:var(--panel)}
+  code{background:var(--panel2);border:1px solid var(--border);border-radius:9px;padding:7px 11px;font-size:13px;word-break:break-all}
+  .copybtn{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:7px 13px;cursor:pointer;font-size:14px;font-weight:600;transition:.15s}
+  .copybtn:hover{border-color:rgba(255,255,255,.22)}
+  .btn.ghost{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text);font-size:16px;padding:13px 28px;box-shadow:none}
+  .btn.ghost:hover{background:rgba(255,255,255,.1);box-shadow:none}
+
+  footer{border-top:1px solid var(--border-soft);padding:32px 0 44px;color:var(--muted);font-size:14px;text-align:center}
   footer a{color:var(--muted)}
-  @media(max-width:600px){.hero h1{font-size:32px}.hero p.lead{font-size:17px}}
+  footer a:hover{color:var(--text)}
+
+  @media(max-width:640px){
+    .hero{padding:64px 0 48px}
+    .hero h1{font-size:36px}
+    .hero p.lead{font-size:17px}
+    h2{font-size:25px}
+    section{padding:44px 0}
+    .ver{display:none}
+    .safe{padding:20px}
+    .panel .inner{padding:34px 18px}
+  }
 </style>
 </head>
 <body>
@@ -64,7 +130,7 @@
   <div class="wrap">
     <a class="brand" href="#">
       <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#202020"/><g fill="none" stroke="#fff" stroke-width="2.5"><circle cx="16" cy="16" r="12"/><circle cx="16" cy="16" r="7"/></g><circle cx="16" cy="16" r="2" fill="#fff"/></svg>
-      Crosshair Overlay
+      Crosshair Overlay <span class="ver">v1.8.2</span>
     </a>
     <div class="lang">
       <button id="btn-fr" class="on" onclick="setLang('fr')">Français</button>
@@ -75,8 +141,10 @@
 
 <main class="wrap">
   <div class="hero">
-    <svg width="96" height="96" viewBox="0 0 96 96" aria-hidden="true"><rect width="96" height="96" rx="20" fill="#202020"/><g fill="none" stroke="#fff" stroke-width="7"><circle cx="48" cy="48" r="33"/><circle cx="48" cy="48" r="20"/></g><circle cx="48" cy="48" r="5.5" fill="#fff"/></svg>
-    <h1 data-fr="Crosshair Overlay" data-en="Crosshair Overlay">Crosshair Overlay</h1>
+    <div class="glow">
+      <svg width="112" height="112" viewBox="0 0 96 96" aria-hidden="true"><rect width="96" height="96" rx="20" fill="#202020"/><g fill="none" stroke="#fff" stroke-width="7"><circle cx="48" cy="48" r="33"/><circle cx="48" cy="48" r="20"/></g><circle cx="48" cy="48" r="5.5" fill="#fff"/></svg>
+    </div>
+    <h1><span data-fr="Crosshair" data-en="Crosshair">Crosshair</span> <span data-fr="Overlay" data-en="Overlay">Overlay</span></h1>
     <p class="lead" data-fr="Un petit viseur transparent pour tes jeux. Gratuit, ultra léger, open source. Un seul exe, rien d'autre." data-en="A small transparent crosshair for your games. Free, ultra light, open source. One single exe, nothing else.">Un petit viseur transparent pour tes jeux. Gratuit, ultra léger, open source. Un seul exe, rien d'autre.</p>
     <div class="badges">
       <span class="badge"><b>100% gratuit</b></span>
@@ -103,7 +171,10 @@
   <section>
     <h2 data-fr="L'interface" data-en="The interface">L'interface</h2>
     <p class="sub" data-fr="Tous les réglages dans une seule fenêtre : forme, taille, épaisseur, couleur, position, langue." data-en="All settings in a single window: shape, size, thickness, color, position, language.">Tous les réglages dans une seule fenêtre : forme, taille, épaisseur, couleur, position, langue.</p>
-    <div style="text-align:center"><img src="screenshot-settings.webp" alt="Crosshair Overlay settings" style="max-width:411px;width:100%;border-radius:12px;border:1px solid var(--border)"></div>
+    <figure class="shot">
+      <img src="screenshot-settings.webp" alt="Crosshair Overlay settings">
+      <figcaption data-fr="La fenêtre de réglages : 14 formes, couleurs, taille, épaisseur et position." data-en="The settings window: 14 shapes, colors, size, thickness and position.">La fenêtre de réglages : 14 formes, couleurs, taille, épaisseur et position.</figcaption>
+    </figure>
   </section>
 
   <section>
@@ -124,32 +195,36 @@
     <p class="sub" data-fr="La sécurité se vérifie. Le code est ouvert, et voici ce qu'il ne contient pas." data-en="Safety can be checked. The code is open, and here is what it does not contain.">La sécurité se vérifie. Le code est ouvert, et voici ce qu'il ne contient pas.</p>
     <div class="safe">
       <ul>
-        <li><b data-fr="Aucun réseau" data-en="No network">Aucun réseau</b> — <span data-fr="aucune connexion, aucune donnée envoyée." data-en="no connection, no data sent.">aucune connexion, aucune donnée envoyée.</span></li>
-        <li><b data-fr="Aucun hook" data-en="No hooks">Aucun hook</b> — <span data-fr="il ne surveille ni le clavier ni la souris." data-en="it does not monitor the keyboard or the mouse.">il ne surveille ni le clavier ni la souris.</span></li>
-        <li><b data-fr="Aucune lecture mémoire" data-en="No memory access">Aucune lecture mémoire</b> — <span data-fr="il ne lit ni ne modifie aucun jeu." data-en="it does not read or modify any game.">il ne lit ni ne modifie aucun jeu.</span></li>
-        <li><b data-fr="Aucune injection" data-en="No injection">Aucune injection</b> — <span data-fr="aucun code injecté, aucune fausse touche envoyée." data-en="no injected code, no fake input sent.">aucun code injecté, aucune fausse touche envoyée.</span></li>
-        <li><b data-fr="Aucun pilote, aucun admin" data-en="No driver, no admin">Aucun pilote, aucun admin</b> — <span data-fr="il tourne comme un programme normal." data-en="it runs like a normal program.">il tourne comme un programme normal.</span></li>
-        <li class="ok"><b data-fr="Juste une fenêtre transparente" data-en="Just a transparent window">Juste une fenêtre transparente</b> — <span data-fr="(UpdateLayeredWindow) au-dessus de l'écran, comme les overlays de Discord ou Steam." data-en="(UpdateLayeredWindow) on top of the screen, like the overlays of Discord or Steam.">(UpdateLayeredWindow) au-dessus de l'écran, comme les overlays de Discord ou Steam.</span></li>
+        <li><span class="mark no">✕</span><span><b data-fr="Aucun réseau" data-en="No network">Aucun réseau</b> — <span data-fr="aucune connexion, aucune donnée envoyée." data-en="no connection, no data sent.">aucune connexion, aucune donnée envoyée.</span></span></li>
+        <li><span class="mark no">✕</span><span><b data-fr="Aucun hook" data-en="No hooks">Aucun hook</b> — <span data-fr="il ne surveille ni le clavier ni la souris." data-en="it does not monitor the keyboard or the mouse.">il ne surveille ni le clavier ni la souris.</span></span></li>
+        <li><span class="mark no">✕</span><span><b data-fr="Aucune lecture mémoire" data-en="No memory access">Aucune lecture mémoire</b> — <span data-fr="il ne lit ni ne modifie aucun jeu." data-en="it does not read or modify any game.">il ne lit ni ne modifie aucun jeu.</span></span></li>
+        <li><span class="mark no">✕</span><span><b data-fr="Aucune injection" data-en="No injection">Aucune injection</b> — <span data-fr="aucun code injecté, aucune fausse touche envoyée." data-en="no injected code, no fake input sent.">aucun code injecté, aucune fausse touche envoyée.</span></span></li>
+        <li><span class="mark no">✕</span><span><b data-fr="Aucun pilote, aucun admin" data-en="No driver, no admin">Aucun pilote, aucun admin</b> — <span data-fr="il tourne comme un programme normal." data-en="it runs like a normal program.">il tourne comme un programme normal.</span></span></li>
+        <li><span class="mark yes">✓</span><span><b data-fr="Juste une fenêtre transparente" data-en="Just a transparent window">Juste une fenêtre transparente</b> — <span data-fr="(UpdateLayeredWindow) au-dessus de l'écran, comme les overlays de Discord ou Steam." data-en="(UpdateLayeredWindow) on top of the screen, like the overlays of Discord or Steam.">(UpdateLayeredWindow) au-dessus de l'écran, comme les overlays de Discord ou Steam.</span></span></li>
       </ul>
     </div>
   </section>
 
   <section>
-    <div class="dl">
-      <h2 data-fr="Télécharger" data-en="Download">Télécharger</h2>
-      <p data-fr="Un seul exe, gratuit, pour Windows 10 et 11 (64 bits). Si Windows affiche SmartScreen (logiciel non signé), clique « Informations complémentaires » puis « Exécuter quand même »." data-en="A single free exe, for Windows 10 and 11 (64-bit). If Windows shows SmartScreen (unsigned software), click “More info” then “Run anyway”.">Un seul exe, gratuit, pour Windows 10 et 11 (64 bits). Si Windows affiche SmartScreen (logiciel non signé), clique « Informations complémentaires » puis « Exécuter quand même ».</p>
-      <a class="btn" href="https://github.com/LightCrosshairOverlay/CrosshairOverlay/releases/latest/download/CrosshairOverlay.exe" data-fr="Télécharger CrosshairOverlay.exe" data-en="Download CrosshairOverlay.exe">Télécharger CrosshairOverlay.exe</a>
-      <p class="req"><span data-fr="Nécessite le" data-en="Requires the">Nécessite le</span> <a href="https://dotnet.microsoft.com/download/dotnet/10.0">.NET 10 Desktop Runtime</a> <span data-fr="(gratuit, Microsoft). Version actuelle : 1.8.2." data-en="(free, from Microsoft). Current version: 1.8.2.">(gratuit, Microsoft). Version actuelle : 1.8.2.</span></p>
+    <div class="panel">
+      <div class="inner">
+        <h2 data-fr="Télécharger" data-en="Download">Télécharger</h2>
+        <p data-fr="Un seul exe, gratuit, pour Windows 10 et 11 (64 bits). Si Windows affiche SmartScreen (logiciel non signé), clique « Informations complémentaires » puis « Exécuter quand même »." data-en="A single free exe, for Windows 10 and 11 (64-bit). If Windows shows SmartScreen (unsigned software), click “More info” then “Run anyway”.">Un seul exe, gratuit, pour Windows 10 et 11 (64 bits). Si Windows affiche SmartScreen (logiciel non signé), clique « Informations complémentaires » puis « Exécuter quand même ».</p>
+        <a class="btn" href="https://github.com/LightCrosshairOverlay/CrosshairOverlay/releases/latest/download/CrosshairOverlay.exe" data-fr="Télécharger CrosshairOverlay.exe" data-en="Download CrosshairOverlay.exe">Télécharger CrosshairOverlay.exe</a>
+        <p class="req"><span data-fr="Nécessite le" data-en="Requires the">Nécessite le</span> <a href="https://dotnet.microsoft.com/download/dotnet/10.0">.NET 10 Desktop Runtime</a> <span data-fr="(gratuit, Microsoft). Version actuelle : 1.8.2." data-en="(free, from Microsoft). Current version: 1.8.2.">(gratuit, Microsoft). Version actuelle : 1.8.2.</span></p>
+      </div>
     </div>
   </section>
 
   <section>
-    <div class="dl">
-      <h2 data-fr="Soutenir le projet" data-en="Support the project">Soutenir le projet</h2>
-      <p data-fr="Crosshair Overlay est gratuit et le restera. Si tu veux soutenir son développement :" data-en="Crosshair Overlay is free and will stay free. If you want to support its development:">Crosshair Overlay est gratuit et le restera. Si tu veux soutenir son développement :</p>
-      <a class="btn" href="https://liberapay.com/Deaa/" data-fr="Soutenir sur Liberapay" data-en="Support on Liberapay">Soutenir sur Liberapay</a>
-      <p class="req"><span data-fr="Ou en USDT (TRC20) :" data-en="Or with USDT (TRC20):">Ou en USDT (TRC20) :</span></p>
-      <p><code id="usdt-addr">TNCFvYtPy2Q6P2nxfoQgqa1ANLMZhVqLK7</code> <button class="copybtn" onclick="copyAddr()" data-fr="Copier" data-en="Copy">Copier</button></p>
+    <div class="panel neutral">
+      <div class="inner">
+        <h2 data-fr="Soutenir le projet" data-en="Support the project">Soutenir le projet</h2>
+        <p data-fr="Crosshair Overlay est gratuit et le restera. Si tu veux soutenir son développement :" data-en="Crosshair Overlay is free and will stay free. If you want to support its development:">Crosshair Overlay est gratuit et le restera. Si tu veux soutenir son développement :</p>
+        <a class="btn ghost" href="https://liberapay.com/Deaa/" data-fr="Soutenir sur Liberapay" data-en="Support on Liberapay">Soutenir sur Liberapay</a>
+        <p class="req"><span data-fr="Ou en USDT (TRC20) :" data-en="Or with USDT (TRC20):">Ou en USDT (TRC20) :</span></p>
+        <p><code id="usdt-addr">TNCFvYtPy2Q6P2nxfoQgqa1ANLMZhVqLK7</code> <button class="copybtn" onclick="copyAddr()" data-fr="Copier" data-en="Copy">Copier</button></p>
+      </div>
     </div>
   </section>
 </main>
